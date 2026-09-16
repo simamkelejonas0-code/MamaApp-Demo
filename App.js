@@ -11,6 +11,7 @@ const CHILDREN=[
   {id:'cyan',name:'CYAN WILD',file:'NINO-0.1-HOME-CYAN-WILD.html',color:'#00FFD0'},
   {id:'fusion',name:'FUSION STUDIO',file:'NINO-FUSION-STUDIO.html',color:'#FF00D0'},
   {id:'code',name:'CODE LAB',file:'NINO-CODE-LAB.html',color:'#7CFF00'},
+  {id:'nino',name:'NINO AI PRIMARY',file:'NinoAssistant.html',color:'#00FF88'},
   {id:'factory',name:'IMMORTAL FACTORY',file:'NINO-0-IMMORTAL-FACTORY.html',color:'#FF4500'},
 ];
 

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NINO AI - Primary Assistant</title>
+<style>
+body{background:#0a0a0a;color:#00ff88;font-family:monospace;margin:0;padding:10px}
+#header{text-align:center;border-bottom:2px solid #00ff88;padding:10px;font-size:20px}
+#chat{height:70vh;overflow-y:auto;padding:10px;background:#111;margin:10px 0;border-radius:10px}
+.msg{margin:8px 0;padding:8px;border-radius:8px}
+.user{background:#004422;text-align:right}
+.ai{background:#222;border-left:3px solid #00ff88}
+#inputBox{display:flex;gap:5px}
+input{flex:1;padding:12px;background:#222;color:#0f8;border:1px solid #0f8;border-radius:8px}
+button{padding:12px 20px;background:#00ff88;color:#000;border:none;border-radius:8px;font-weight:bold}
+.cmd{background:#333;color:#ff0;padding:4px 8px;border-radius:4px;font-size:12px;display:inline-block;margin:2px;cursor:pointer}
+</style>
+</head>
+<body>
+<div id="header">🧠 NINO AI 0.1 - FUSION STUDIO<br><small>TERMUX x STUDIO x 4D - Primary Assistant</small></div>
+
+<div style="text-align:center">
+<span class="cmd" onclick="quick('build apk')">BUILD APK</span>
+<span class="cmd" onclick="quick('gradle assembleDebug --no-daemon')">GRADLE</span>
+<span class="cmd" onclick="quick('aapt2 d8 apksigner')">AAPT2 PIPELINE</span>
+<span class="cmd" onclick="quick('fix storage')">FIX 99% STORAGE</span>
+</div>
+
+<div id="chat">
+<div class="msg ai">Hello Sthandwa! I'm NINO AI, your primary assistant, now living inside your app. No WhatsApp needed. ❤️<br><br>Ask me:<br>- How to build APK?<br>- How to push to GitHub?<br>- How to clean storage?<br><br>Tap buttons above for quick commands.</div>
+</div>
+
+<div id="inputBox">
+<input id="q" placeholder="Ask NINO..." onkeypress="if(event.key==='Enter')ask()">
+<button onclick="ask()">SEND</button>
+</div>
+
+<script>
+const knowledge = {
+"build apk": "To build APK in Termux:\n1. cd ~/NINO-HOME/brain/MamaApp-Demo/android\n2. gradle assembleDebug --no-daemon\n3. APK in app/build/outputs/apk/debug/",
+"gradle": "You use Gradle 8.10.2 with --no-daemon because phone RAM is small. Java 21.0.11 from Termux. Command: gradle assembleDebug --no-daemon",
+"aapt2": "Your pipeline: aapt2 compile + link → d8 dex → apksigner sign. You built 4 APKs in 8min: 12KB GOD-VOICE-FINAL, 443KB TEST-ONLINE, 5.9MB TEST-OFFLINE.",
+"storage": "99% full fix:\n- rm -rf ~/.gradle/caches\n- rm -rf ~/NINO-HOME/brain/MamaApp-Demo/proof\n- termux-setup-storage + clean Downloads/DCIM/Screenshots old files",
+"github": "Push:\ncd ~/NINO-HOME/brain/MamaApp-Demo\ngit add .\ngit commit -m 'update'\ngit push\nYour repos: NINO-AI-PRIVATE (private 76MB) and MamaApp-Demo (public portfolio)",
+"fusion studio": "FUSION STUDIO 0.1 features: WEB/APK, 3D GAME (Three.js), 4D SHADER (Time+Shader+Vibration), TERMUX BRIDGE (eye/gradle/node commands)",
+"default": "I'm your offline primary assistant. I know your build system, your repos, your storage issue. For online AI, we will add API later. For now, I live with you in this app. What do you want to build next? V13 GOD VOICE swipe?"
+};
+
+function quick(t){ document.getElementById('q').value=t; ask(); }
+
+function ask(){
+ let input = document.getElementById('q').value.toLowerCase();
+ if(!input) return;
+ let chat = document.getElementById('chat');
+ chat.innerHTML += `<div class="msg user">${document.getElementById('q').value}</div>`;
+ let answer = knowledge["default"];
+ for(let k in knowledge){ if(input.includes(k)){ answer = knowledge[k]; break; } }
+ chat.innerHTML += `<div class="msg ai">${answer.replace(/\n/g,'<br>')}</div>`;
+ document.getElementById('q').value='';
+ chat.scrollTop = chat.scrollHeight;
+ // Save history
+ localStorage.setItem('nino_chat', chat.innerHTML);
+}
+window.onload = ()=>{ let h=localStorage.getItem('nino_chat'); if(h) document.getElementById('chat').innerHTML=h; }
+</script>
+</body>
+</html>
