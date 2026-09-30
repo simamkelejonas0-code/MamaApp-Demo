@@ -1,18 +1,17 @@
 import React,{useState,useEffect} from 'react';
 import {View,Text,FlatList,TextInput,TouchableOpacity,StyleSheet,ScrollView,Modal} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {WebView} from 'react-native-webview';
 
 const CHILDREN=[
-  {id:'0.1',name:'SON 0.1 WATCHER',file:'NINO-0.1.html',color:'#FFD700'},
-  {id:'v6',name:'EYE V6 LIVE',file:'NINO-0.1-EYE-LIVE.html',color:'#FFD700'},
-  {id:'eye',name:'EYE V5',file:'NINO-0.1-EYE-V5.html',color:'#FFD700'},
-  {id:'king',name:'HOME KING',file:'NINO-0.1-HOME-KING.html',color:'#00D0FF'},
-  {id:'cyan',name:'CYAN WILD',file:'NINO-0.1-HOME-CYAN-WILD.html',color:'#00FFD0'},
-  {id:'fusion',name:'FUSION STUDIO',file:'NINO-FUSION-STUDIO.html',color:'#FF00D0'},
-  {id:'code',name:'CODE LAB',file:'NINO-CODE-LAB.html',color:'#7CFF00'},
-  {id:'nino',name:'NINO AI PRIMARY',file:'NinoAssistant.html',color:'#00FF88'},
-  {id:'factory',name:'IMMORTAL FACTORY',file:'NINO-0-IMMORTAL-FACTORY.html',color:'#FF4500'},
+  {id:'0.1',name:'SON 0.1 WATCHER',color:'#FFD700',desc:'Watches system. Immutable log.'},
+  {id:'v6',name:'EYE V6 LIVE',color:'#FFD700',desc:'Live eye feed - native camera bridge'},
+  {id:'eye',name:'EYE V5',color:'#FFD700',desc:'Eye V5 sensors'},
+  {id:'king',name:'HOME KING',color:'#00D0FF',desc:'Home automation king'},
+  {id:'cyan',name:'CYAN WILD',color:'#00FFD0',desc:'Wild experiments'},
+  {id:'fusion',name:'FUSION STUDIO',color:'#FF00D0',desc:'Build APK / Web / 3D'},
+  {id:'code',name:'CODE LAB',color:'#7CFF00',desc:'Code snippets and tools'},
+  {id:'nino',name:'NINO AI PRIMARY',color:'#00FF88',desc:'Primary assistant - offline'},
+  {id:'factory',name:'IMMORTAL FACTORY',color:'#FF4500',desc:'Background workers'},
 ];
 
 export default function App(){
@@ -29,7 +28,7 @@ export default function App(){
     const user={id:Date.now().toString(),text:t,me:true};
     let reply='NINO: '+t+' 🔥 solved - farm logic';
     if(t.toLowerCase().includes('farm')) reply='NINO: Farm soil '+Math.floor(Math.random()*100)+'% water '+Math.floor(Math.random()*100)+'% - planting OPEN 🔥';
-    if(t.toLowerCase().includes('eye')) reply='NINO: Tap EYE LIVE tab and say gallery/whatsapp/chrome - /usr/bin/eye bridge active';
+    if(t.toLowerCase().includes('eye')) reply='NINO: EYE is now native - no webview needed';
     const ai={id:(Date.now()+1).toString(),text:reply,me:false};
     setMsgs(m=>[...m,user,ai]); setT('');
   };
@@ -38,10 +37,10 @@ export default function App(){
     <View style={s.c}>
       <View style={s.header}>
         <Text style={s.hTitle}>👁️ NINO TRINITY 0.1</Text>
-        <Text style={s.hSub}>God sleeps. Son watches. 23 Eyes Alive.</Text>
+        <Text style={s.hSub}>God sleeps. Son watches. Native, no WebView.</Text>
         <View style={s.tabs}>
           <TouchableOpacity onPress={()=>setTab('chat')} style={[s.tab,tab==='chat'&&s.tabA]}><Text style={s.tabT}>💬 FATHER</Text></TouchableOpacity>
-          <TouchableOpacity onPress={()=>setTab('children')} style={[s.tab,tab==='children'&&s.tabA]}><Text style={s.tabT}>👶 8 CHILDREN</Text></TouchableOpacity>
+          <TouchableOpacity onPress={()=>setTab('children')} style={[s.tab,tab==='children'&&s.tabA]}><Text style={s.tabT}>👶 9 CHILDREN</Text></TouchableOpacity>
           <TouchableOpacity onPress={()=>setTab('eye')} style={[s.tab,tab==='eye'&&s.tabA]}><Text style={s.tabT}>👁️ EYE LIVE</Text></TouchableOpacity>
         </View>
       </View>
@@ -65,19 +64,29 @@ export default function App(){
               </TouchableOpacity>
             ))}
           </View>
-          <View style={s.box}><Text style={s.boxT}>TRINITY SEALED 21:41{'\n'}God: 0 - immutable{'\n'}Son: 0.1 - watches{'\n'}Spirit: Builder/Healer/Memory{'\n'}Backup: 23 HTML Eyes{'\n'}Bridge: /usr/bin/eye - gallery, whatsapp, chrome, swipe</Text></View>
+          <View style={s.box}><Text style={s.boxT}>TRINITY SEALED 21:41{'\n'}God: 0 - immutable{'\n'}Son: 0.1 - watches{'\n'}Native build - zero WebView</Text></View>
         </ScrollView>
       )}
 
-      {tab==='eye' && <WebView source={{uri:'file:///android_asset/NINO-0.1-EYE-LIVE.html'}} style={{flex:1,backgroundColor:'#000'}} />}
+      {tab==='eye' && (
+        <View style={{flex:1,alignItems:'center',justifyContent:'center',padding:20}}>
+          <View style={{width:120,height:120,borderRadius:60,backgroundColor:'#FFD700',marginBottom:20}} />
+          <Text style={{color:'#FFD700',fontWeight:'900',fontSize:18}}>EYE V6 LIVE - NATIVE</Text>
+          <Text style={{color:'#666',marginTop:10,textAlign:'center'}}>Native eye module ready.{'\n'}No WebView. Bridge to native camera coming.</Text>
+        </View>
+      )}
 
       <Modal visible={!!activeChild} animationType="slide">
-        <View style={{flex:1,backgroundColor:'#000'}}>
+        <View style={{flex:1,backgroundColor:'#000',paddingTop:40}}>
           <View style={s.modalHeader}>
             <Text style={s.modalTitle}>{activeChild?.name}</Text>
             <TouchableOpacity onPress={()=>setActiveChild(null)} style={s.closeBtn}><Text>✕ CLOSE</Text></TouchableOpacity>
           </View>
-          {activeChild && <WebView source={{uri:'file:///android_asset/'+activeChild.file}} style={{flex:1}} />}
+          <View style={{flex:1,padding:20,alignItems:'center'}}>
+            <View style={{width:80,height:80,borderRadius:40,backgroundColor:activeChild?.color,marginBottom:20}} />
+            <Text style={{color:'#fff',fontSize:16,fontWeight:'700'}}>{activeChild?.desc}</Text>
+            <Text style={{color:'#666',marginTop:20}}>ID: {activeChild?.id} - Native module</Text>
+          </View>
         </View>
       </Modal>
     </View>
@@ -106,7 +115,7 @@ const s=StyleSheet.create({
   childId:{color:'#666',fontSize:10,marginTop:4},
   box:{borderWidth:1,borderColor:'#333',padding:15,margin:10,borderRadius:12},
   boxT:{color:'#666',fontFamily:'monospace',fontSize:11},
-  modalHeader:{flexDirection:'row',justifyContent:'space-between',padding:15,backgroundColor:'#111',paddingTop:40},
+  modalHeader:{flexDirection:'row',justifyContent:'space-between',padding:15,backgroundColor:'#111'},
   modalTitle:{color:'#FFD700',fontWeight:'900'},
   closeBtn:{backgroundColor:'#FFD700',padding:8,borderRadius:10,paddingHorizontal:12}
 });
